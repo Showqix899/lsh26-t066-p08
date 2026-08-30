@@ -1,5 +1,7 @@
 # lsh26-t066-p08 — School Result Processing & GPA Engine
 
+**Live URL:** [https://lsh26-t066-p08.vercel.app/](https://lsh26-t066-p08.vercel.app/) &nbsp;·&nbsp;
+
 **Team:** LSH26-T066 &nbsp;·&nbsp; **Problem:** P08 &nbsp;·&nbsp; **Event:** LofiStack Hackathon 2026
 
 > Naming note: the team ID is written here as `LSH26-T066` / `lsh26-t066-p08`,

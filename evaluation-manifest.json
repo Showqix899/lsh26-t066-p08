@@ -2,9 +2,8 @@
   "team_id": "LSH26-T066",
   "problem_id": "P08",
   "repository_name": "lsh26-t066-p08",
-  "live_url": "https://example.com/",
-  "demo_video_url_optional": "",
-  "event_start_code": "<START-CODE>",
+  "live_url": "https://lsh26-t066-p08.vercel.app/",
+  "event_start_code": "LSH26-8490-C900",
   "repository_created_before_release": false,
   "pre_event_materials": [
     "Generic Next.js/React + Tailwind boilerplate pushed to a public repo the night before, per the rulebook's allowed pre-event prep. Not used for this problem's actual React+Vite+Tailwind scaffold, which was created after 18:00 — see EVENT.md for the first-commit start code."
@@ -35,15 +34,20 @@
   },
   "team_members": [
     {
-      "registered_name": "<MEMBER NAME>",
-      "github_username": "<GITHUB USERNAME>",
-      "major_contribution": "<TODO: fill in before submission>",
-      "evidence_paths_or_commits": []
+      "registered_name": "Abdullah Mahmud Showqi",
+      "github_username": "Showqix899",
+      "major_contribution": "Sole contributor to this repository. Read the problem statement and all published rulings (R-10 through R-29) and translated them into a single dependency-free grading engine (src/logic/gradeEngine.js) covering the mark-to-grade-point ladder, the practical theory/practical pass rules, absence handling, the GPA formula with the compulsory-fail override, and letter grading. Verified the engine directly against all 25 published cases before building the UI. Built the results table, per-student calculation trace, the three office checking lists, and the three bonus features (marks-sheet import with row-level validation, class summary, printable marksheet), plus the app shell, theming, and documentation.",
+      "evidence_paths_or_commits": [
+        "src/logic/gradeEngine.js",
+        "src/logic/sheetImport.js",
+        "src/components/",
+        "src/App.jsx"
+      ]
     },
     {
-      "registered_name": "<MEMBER NAME>",
-      "github_username": "<GITHUB USERNAME>",
-      "major_contribution": "<TODO: fill in before submission>",
+      "registered_name": "Md Sakib-Rahman",
+      "github_username": "Md-Sakib-Rahman",
+      "major_contribution": "No code contribution to this repository (P02). Worked the team's second selected problem per the team's one-person-per-problem division of labour; see that repository's own README and evaluation-manifest.json for their contribution record.",
       "evidence_paths_or_commits": []
     }
   ],
