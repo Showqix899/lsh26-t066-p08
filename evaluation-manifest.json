@@ -1,0 +1,71 @@
+{
+  "team_id": "LSH26-T066",
+  "problem_id": "P08",
+  "repository_name": "lsh26-t066-p08",
+  "live_url": "https://example.com/",
+  "demo_video_url_optional": "",
+  "event_start_code": "<START-CODE>",
+  "repository_created_before_release": false,
+  "pre_event_materials": [
+    "Generic Next.js/React + Tailwind boilerplate pushed to a public repo the night before, per the rulebook's allowed pre-event prep. Not used for this problem's actual React+Vite+Tailwind scaffold, which was created after 18:00 — see EVENT.md for the first-commit start code."
+  ],
+  "sample_data": {
+    "loads_published_fixture": true,
+    "method": "file upload",
+    "reset_instructions": "The app fetches public/fixtures.json (the organiser-published P08_school_results_public.json, all 25 cases) once at page load and defaults to case PUB-01. To restore the initial state at any point, click 'Reset to default' in the header, or simply reload the page — no data is ever written back to disk or a server, so there is nothing to corrupt. To load a different published case, use the 'Fixture case' dropdown in the header. To load a custom marks file, use the 'Upload / validate' tab, which accepts a file in the same shape (a single case object, or a full {\"cases\": [...]} file) and reports any rejected rows before loading."
+  },
+  "problem_solving_method": "Split the problem into two independent layers on purpose. (1) A framework-free grading engine (src/engine/rules.ts + validate.ts) that implements R-10 through R-13 and R-29 exactly, with a unit test suite that hand-verifies real students from the published PUB-01 fixture (a two-compulsory-fail case, a practical-fail-with-passing-theory case, and an absent-compulsory-subject case) so the numbers can be checked independently of any UI. (2) A thin React/Vite/Tailwind UI over that engine with no backend and no database, since every requirement in the problem statement is a computation-and-display task over data that already exists in the published fixture — a static site loading a static JSON asset satisfies 'a live URL that loads for a judge with zero setup' without the failure modes a database connection string introduces on a strict deploy freeze. The one deliberate design risk taken was the 'red pen circle' visual device on the trace view, which exists specifically to satisfy the requirement that a high-average student's failing subject be visibly traceable, not just textually present.",
+  "requirements": {
+    "R1": {
+      "status": "complete",
+      "evidence": "public/fixtures.json (organiser fixture, PUB-01 = 80 students / 2 classes loaded by default) + src/components/Roster.tsx. Edge-case students verified by hand in src/engine/rules.test.ts (Kamal Begum, Lamia Islam, Hasib Das, Hasib Khatun)."
+    },
+    "R2": {
+      "status": "complete",
+      "evidence": "src/engine/rules.ts — evaluateSubject() and evaluateStudent() implement grade points, GPA (R-13) and letter grade (R-10) for every student."
+    },
+    "R3": {
+      "status": "complete",
+      "evidence": "src/components/Trace.tsx — per-subject mark/grade-point/rule table, with the failing subject(s) visually flagged via the RedPenCircle component when a compulsory failure occurs."
+    },
+    "R4": {
+      "status": "complete",
+      "evidence": "src/components/CheckingLists.tsx — three lists (optional, practical-fail, absent) per R-29, each row clickable through to that student's full trace."
+    }
+  },
+  "team_members": [
+    {
+      "registered_name": "<MEMBER NAME>",
+      "github_username": "<GITHUB USERNAME>",
+      "major_contribution": "<TODO: fill in before submission>",
+      "evidence_paths_or_commits": []
+    },
+    {
+      "registered_name": "<MEMBER NAME>",
+      "github_username": "<GITHUB USERNAME>",
+      "major_contribution": "<TODO: fill in before submission>",
+      "evidence_paths_or_commits": []
+    }
+  ],
+  "major_design_decisions": [
+    "No backend/database — this problem is entirely computation-and-display over data supplied up front; a static site fetching a static JSON asset meets the zero-setup live-URL requirement with the fewest deploy-freeze failure modes.",
+    "Fixture served from public/fixtures.json and fetched at runtime rather than imported into the JS bundle, keeping the production bundle at ~217 KB (67 KB gzipped) instead of ~580 KB.",
+    "No router and no chart library — five tabs over one in-memory dataset don't need one, and four summary bars don't need Recharts/Chart.js; both were left out to keep the licensed dependency surface to just react/react-dom.",
+    "Absence ('AB') modelled as a distinct value from 0 throughout the type system (RawMark = number | \"AB\" | {theory, practical}), not handled as a special case bolted on later."
+  ],
+  "known_limitations": [
+    "No persistence: uploading a marks file or switching fixture cases only changes in-memory state for that browser tab; refreshing the page always returns to the default PUB-01 fixture.",
+    "Upload/validate accepts JSON only, not CSV, since the published fixture and the problem's own format_note are both JSON-shaped.",
+    "The compulsory-subject list is fixed per case (as the fixture defines it) rather than configurable per class within a case.",
+    "One devDependency (lightningcss, pulled in transitively by Tailwind CSS v4) is MPL-2.0 — confirmed not present in the shipped dist/ output, but flagged for organiser confirmation in LICENSES.md rather than assumed safe, mirroring the MongoDB Atlas judgment call in the hackathon prep notes."
+  ],
+  "ai_tools_used": [
+    {
+      "tool": "Claude",
+      "used_for": "Scaffolded the full project (Vite/React/Tailwind config), wrote the grading engine (src/engine/rules.ts, validate.ts) and its unit test suite, wrote all UI components, and drafted README.md/LICENSES.md/this manifest.",
+      "how_output_was_verified": "Every grading rule was checked against the published clarifications R-10–R-13/R-29 line by line. The engine's unit tests hand-verify GPA/letter-grade output for four real students pulled from the published PUB-01 fixture by independently recalculating their results against the rulebook before writing the assertions, plus boundary tests at every band edge (mark 79/80, 32/33; practical mark exactly 8; GPA cap at 5.00). npx tsc -b, npx vitest run, and npm run build were all run clean before this manifest was written."
+    }
+  ],
+  "licenses_file": "LICENSES.md",
+  "declaration": "The information above is complete and truthful to the best of the team's knowledge."
+}

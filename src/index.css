@@ -1,0 +1,95 @@
+@import "tailwindcss";
+
+/*
+ * ---------------------------------------------------------------------------
+ * DESIGN TOKENS — "Result Ledger" theme
+ * ---------------------------------------------------------------------------
+ * Concept: the app should feel like a real, hand-checked mark register, not
+ * a generic dashboard. Numbers are set in a monospaced face so digits line
+ * up column-by-column the way they would in a paper ledger. The one accent
+ * colour is a "red pen" red, and it is used ONLY on the specific number/row
+ * that a rule flagged, never decoratively, so the eye is drawn straight to
+ * whatever a teacher would need to double-check by hand.
+ * ---------------------------------------------------------------------------
+ */
+@theme {
+  --font-display: "Newsreader", "Iowan Old Style", serif;
+  --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;
+
+  --color-paper: #faf9f7;
+  --color-paper-line: #e2dfd7;
+  --color-surface: #ffffff;
+  --color-surface-sunken: #f1efe9;
+
+  --color-ink: #1e1d1a;
+  --color-ink-soft: #6b685f;
+  --color-ink-faint: #a6a297;
+
+  --color-pass: #3f6b52;
+  --color-pass-soft: #e7efe9;
+
+  --color-flag: #af3029;
+  --color-flag-soft: #f6e6e3;
+
+  --color-optional: #7a5c2e;
+  --color-optional-soft: #f2e9d8;
+}
+
+html {
+  background: var(--color-paper);
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+.font-mono-num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Hairline double rule used at the head/foot of ledger tables, evoking the
+   ruled lines on a real report card. */
+.ledger-rule {
+  border-top: 1px solid var(--color-ink);
+  border-bottom: 1px solid var(--color-paper-line);
+  height: 3px;
+}
+
+/* Reduced motion: respect user preference site-wide. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Print stylesheet for the single-student printable marksheet (bonus
+   feature). Everything except the element carrying data-print-area is
+   hidden when printing. */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  [data-print-area],
+  [data-print-area] * {
+    visibility: visible;
+  }
+  [data-print-area] {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+  }
+  .no-print {
+    display: none !important;
+  }
+}
